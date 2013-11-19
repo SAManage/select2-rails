@@ -1174,28 +1174,28 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft -= bodyOffset.left;
             }
 
-            // always prefer the current above/below alignment, unless there is not enough room
-            if (aboveNow) {
-                above = true;
-                if (!enoughRoomAbove && enoughRoomBelow) above = false;
-            } else {
-                above = false;
-                if (!enoughRoomBelow && enoughRoomAbove) above = true;
-            }
+             //always prefer the current above/below alignment, unless there is not enough room
+            //if (aboveNow) {
+                //above = true;
+                //if (!enoughRoomAbove && enoughRoomBelow) above = false;
+            //} else {
+                //above = false;
+                //if (!enoughRoomBelow && enoughRoomAbove) above = true;
+            //}
 
-            if (!enoughRoomOnRight) {
-               dropLeft = offset.left + width - dropWidth;
-            }
+            //if (!enoughRoomOnRight) {
+               //dropLeft = offset.left + width - dropWidth;
+            //}
 
-            if (above) {
-                dropTop = offset.top - dropHeight;
-                this.container.addClass("select2-drop-above");
-                $dropdown.addClass("select2-drop-above");
-            }
-            else {
-                this.container.removeClass("select2-drop-above");
-                $dropdown.removeClass("select2-drop-above");
-            }
+            //if (above) {
+                //dropTop = offset.top - dropHeight;
+                //this.container.addClass("select2-drop-above");
+                //$dropdown.addClass("select2-drop-above");
+            //}
+            //else {
+                //this.container.removeClass("select2-drop-above");
+                //$dropdown.removeClass("select2-drop-above");
+            //}
 
             css = $.extend({
                 top: dropTop,
