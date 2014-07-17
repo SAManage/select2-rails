@@ -15,6 +15,7 @@ class SourceFile < Thor
     get "#{remote}/raw/#{tag}/select2x2.png", "images/select2x2.png"
     get "#{remote}/raw/#{tag}/select2-spinner.gif", "images/select2-spinner.gif"
     get "#{remote}/raw/#{tag}/select2.css", "stylesheets/select2.css"
+    get "#{remote}/raw/#{tag}/select2-bootstrap.css", "stylesheets/select2-bootstrap.css"
     get "#{remote}/raw/#{tag}/select2.js", "javascripts/select2.js"
     languages.each do |lang|
       get "#{remote}/raw/#{tag}/select2_locale_#{lang}.js", "javascripts/select2_locale_#{lang}.js"
@@ -26,6 +27,7 @@ class SourceFile < Thor
     self.destination_root = "app/assets"
     inside destination_root do
       run("cp stylesheets/select2.css stylesheets/select2.css.erb")
+      build_image_dependencies
       gsub_file 'stylesheets/select2.css.erb', %r/url\(([^\)]*)\)/, 'url(<%= asset_path(\1) %>)'
     end
   end
@@ -35,7 +37,9 @@ class SourceFile < Thor
     self.destination_root = "app/assets"
     remove_file "stylesheets/select2.css"
   end
+  
   private
+
   def fetch_tags
     http = HTTPClient.new
     response = JSON.parse(http.get("https://api.github.com/repos/ivaynberg/select2/tags").body)
@@ -43,8 +47,8 @@ class SourceFile < Thor
   end
   def languages
     [ "ar", "bg", "ca", "cs", "da", "de", "el", "es", "et", "eu", "fa", "fi", "fr", "gl", "he", "hr",
-      "hu", "id", "is", "it", "ja", "ko", "lt", "lv", "mk", "ms", "nl", "no", "pl", "pt-BR",
-      "pt-PT", "ro", "ru", "sk", "sv", "th", "tr", "ua", "vi", "zh-CN", "zh-TW"
+      "hu", "id", "is", "it", "ja", "ka", "ko", "lt", "lv", "mk", "ms", "nl", "no", "pl", "pt-BR",
+      "pt-PT", "ro", "rs", "ru", "sk", "sv", "th", "tr", "uk", "vi", "zh-CN", "zh-TW"
     ].sort
   end
   def select msg, elements
@@ -54,4 +58,19 @@ class SourceFile < Thor
     result = ask(msg).to_i
     elements[result - 1]
   end
+
+  def build_image_dependencies
+    f = File.open("stylesheets/select2.css.erb", "r+")
+    lines = f.readlines
+    f.close
+    lines = ["//= depend_on_asset \"select2.png\"\n"] + 
+            ["//= depend_on_asset \"select2-spinner.gif\"\n"] + 
+            ["//= depend_on_asset \"select2x2.png\"\n"] + 
+            lines
+
+    output = File.new("stylesheets/select2.css.erb", "w")
+    lines.each { |line| output.write line }
+    output.close
+  end
+
 end

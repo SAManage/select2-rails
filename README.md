@@ -26,6 +26,10 @@ Add to your `app/assets/stylesheets/application.css`:
 
 	*= require select2
 
+If you are using Twitter Boostrap you need to also require the bootstrap theme CSS in addition to the above require.
+
+	*= require select2-bootstrap
+
 ## Internationalization (i18n)
 
 The `select2-rails` now supports multiple languages.
@@ -36,12 +40,21 @@ Add the following to your `app/assets/javascripts/application.js`:
 
 Possible languages:
 
-	ar, ca, cs, da, de, el, es, et, eu, fi, fr, gl, he, hr, hu, id, is, it, ja, ko, lt, lv, mk, ms, nl, no, pl, pt-BR, pt-PT, ro, ru, sk, sv, tr, ua, vi, zh-CN, zh-TW
+	ar, ca, cs, da, de, el, es, et, eu, fi, fr, gl, he, hr, hu, id, is, it, ja, ka, ko, lt, lv, mk, ms, nl, no, pl, pt-BR, pt-PT, ro, rs, ru, sk, sv, tr, uk, vi, zh-CN, zh-TW
 
 ## Example
 Code [here](https://github.com/argerim/select_2_example)
 
 Heroku app [here](http://select-2-example.herokuapp.com/)
+
+## Fix
+### IE8 Invalid Character
+IE8 doesn't support some unescaped Unicode character and need to quote keys in object literals
+You need some configurations for [Uglifier](https://github.com/lautis/uglifier) to do the work.
+Add to your `config/environments/production.rb`
+
+       require 'uglifier'
+       config.assets.js_compressor = Uglifier.new(output: {ascii_only: true, quote_keys: true})
 
 ## Version
 From `v2.1.0` on, `select2-rails`'s version will match the version of `Select2` it uses.
