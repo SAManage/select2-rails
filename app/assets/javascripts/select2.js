@@ -115,12 +115,13 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     function stripDiacritics(str) {
+        return str;
         // Used 'uni range + named function' from http://jsperf.com/diacritics/18
-        function match(a) {
-            return DIACRITICS[a] || a;
-        }
+        // function match(a) {
+        //     return DIACRITICS[a] || a;
+        // }
 
-        return str.replace(/[^\u0000-\u007E]/g, match);
+        // return str.replace(/[^\u0000-\u007E]/g, match);
     }
 
     function indexOf(value, array) {
@@ -1293,27 +1294,27 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft -= bodyOffset.left;
             }
 
-            if (!enoughRoomOnRight) {
-                dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
-            }
+            // if (!enoughRoomOnRight) {
+            //     dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
+            // }
 
             css =  {
                 left: dropLeft,
                 width: width
             };
 
-            if (above) {
-                css.top = offset.top - dropHeight;
-                css.bottom = 'auto';
-                this.container.addClass("select2-drop-above");
-                $dropdown.addClass("select2-drop-above");
-            }
-            else {
-                css.top = dropTop;
-                css.bottom = 'auto';
-                this.container.removeClass("select2-drop-above");
-                $dropdown.removeClass("select2-drop-above");
-            }
+            // if (above) {
+            //     css.top = offset.top - dropHeight;
+            //     css.bottom = 'auto';
+            //     this.container.addClass("select2-drop-above");
+            //     $dropdown.addClass("select2-drop-above");
+            // }
+            // else {
+            //     css.top = dropTop;
+            //     css.bottom = 'auto';
+            //     this.container.removeClass("select2-drop-above");
+            //     $dropdown.removeClass("select2-drop-above");
+            // }
             css = $.extend(css, evaluate(this.opts.dropdownCss, this.opts.element));
 
             $dropdown.css(css);
