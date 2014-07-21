@@ -1225,8 +1225,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 viewportBottom = $window.scrollTop() + windowHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
-                enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
-                enoughRoomAbove = (offset.top - dropHeight) >= $window.scrollTop(),
+                // Open the dropdown always below!
+                // enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
+                // enoughRoomAbove = (offset.top - dropHeight) >= $window.scrollTop(),
+                enoughRoomBelow = true,
+                enoughRoomAbove = false,
                 dropWidth = $dropdown.outerWidth(false),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
@@ -1294,27 +1297,27 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft -= bodyOffset.left;
             }
 
-            // if (!enoughRoomOnRight) {
-            //     dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
-            // }
+            if (!enoughRoomOnRight) {
+                dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
+            }
 
             css =  {
                 left: dropLeft,
                 width: width
             };
 
-            // if (above) {
-            //     css.top = offset.top - dropHeight;
-            //     css.bottom = 'auto';
-            //     this.container.addClass("select2-drop-above");
-            //     $dropdown.addClass("select2-drop-above");
-            // }
-            // else {
-            //     css.top = dropTop;
-            //     css.bottom = 'auto';
-            //     this.container.removeClass("select2-drop-above");
-            //     $dropdown.removeClass("select2-drop-above");
-            // }
+            if (above) {
+                css.top = offset.top - dropHeight;
+                css.bottom = 'auto';
+                this.container.addClass("select2-drop-above");
+                $dropdown.addClass("select2-drop-above");
+            }
+            else {
+                css.top = dropTop;
+                css.bottom = 'auto';
+                this.container.removeClass("select2-drop-above");
+                $dropdown.removeClass("select2-drop-above");
+            }
             css = $.extend(css, evaluate(this.opts.dropdownCss, this.opts.element));
 
             $dropdown.css(css);
