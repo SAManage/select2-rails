@@ -884,7 +884,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (element.is("option")) {
                 return {
                     id:element.prop("value"),
-                    text:element.text(),
+                    text:element.html(),
                     element: element.get(),
                     css: element.attr("class"),
                     disabled: element.prop("disabled"),
